@@ -4,14 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
-    <script src="script.js"></script>
+    <script src="page_script.js"></script>
+    <script src="genera_es.js"></script>
     <title>Triangoli</title>
   </head>
   <body>
     <h1><span>Trigonometria</span></h1>
-    Ciao. Questo è un testo. Vuoi fare alcuni esercizi?
+    Vuoi fare alcuni esercizi di trigonometria?
     <button onclick="genera()">Genera</button>
     <ol id="exlist"></ol>
-    <div id="soluzioni"></div>
+
+    <div id="csv_stuff" style="display: none">
+      <a id="csv_downloader">Scarica csv</a><br />
+      Viene scaricato un file in formato csv, pronto per essere importato su
+      <a href="https://www.panquiz.com/" target="_blank">panquiz</a>, secondo le
+      modalità descritte
+      <a
+        href="https://community.panquiz.com/support/importazione-delle-domande-excel/"
+        target="_blank"
+        >qui</a
+      >. Se non funziona, puoi copiaincollare il csv da qui sotto, dopo aver
+      pigiato <button onclick="write_csv()">Genera csv</button><br />
+
+      <div id="csv_text"></div>
+    </div>
   </body>
 </html>

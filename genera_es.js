@@ -5,34 +5,8 @@ const lato_delta = lato_max - lato_min;
 const ang_min = 5;
 const ang_max = 85;
 const ang_delta = ang_max - ang_min;
-const udm_angoli = "°";
+const udm_angoli = "&deg";
 const udm_lati_list = [" u", " cm", " N"];
-
-function genera() {
-  const list = document.getElementById("exlist");
-  list.innerHTML = "";
-  let soluzioni = "Soluzioni: ";
-
-  const l = 9;
-  let ex_type_list = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-  for (let j = 0; j < l; j++) {
-    r = Math.floor(Math.random() * (l - j)) + j;
-    [ex_type_list[j], ex_type_list[r]] = [ex_type_list[r], ex_type_list[j]];
-  }
-  console.log(ex_type_list);
-
-  for (let i = 1; i <= l; i++) {
-    const ex = document.createElement("li");
-    const ex_generato = genera_es(ex_type_list[i - 1]);
-    ex.innerHTML =
-      ex_generato.testo +
-      "<br>" +
-      `Soluzione: <span class='soluzione'> ${ex_generato.sol}. </span>`;
-    list.appendChild(ex);
-    soluzioni += `(${i}) ${ex_generato.sol} `;
-  }
-  // document.getElementById("soluzioni").textContent = soluzioni;
-}
 
 function shuffle(a = "A", b = "B", c = "C") {
   var vertici = [a, b, c];
@@ -199,4 +173,8 @@ function genera_es(t) {
   }
 
   return { testo, sol };
+}
+
+function es_to_csv(testo, sol) {
+  return "Ciao";
 }
