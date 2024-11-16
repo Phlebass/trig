@@ -5,25 +5,47 @@ const lato_delta = lato_max - lato_min;
 const ang_min = 5;
 const ang_max = 85;
 const ang_delta = ang_max - ang_min;
-const udm_lati = " cm";
 const udm_angoli = "°";
+const udm_lati_list = [" u", " cm", " N"];
 
 function genera() {
   const list = document.getElementById("exlist");
   list.innerHTML = "";
   let soluzioni = "Soluzioni: ";
-  for (let i = 1; i <= 10; i++) {
+
+  const l = 9;
+  let ex_type_list = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  for (let j = 0; j < l; j++) {
+    r = Math.floor(Math.random() * (l - j)) + j;
+    [ex_type_list[j], ex_type_list[r]] = [ex_type_list[r], ex_type_list[j]];
+  }
+  console.log(ex_type_list);
+
+  for (let i = 1; i <= l; i++) {
     const ex = document.createElement("li");
-    const ex_generato = genera_es(i - 1);
-    ex.textContent = ex_generato.testo;
+    const ex_generato = genera_es(ex_type_list[i - 1]);
+    ex.innerHTML =
+      ex_generato.testo +
+      "<br>" +
+      `Soluzione: <span class='soluzione'> ${ex_generato.sol}. </span>`;
     list.appendChild(ex);
     soluzioni += `(${i}) ${ex_generato.sol} `;
   }
-  document.getElementById("soluzioni").textContent = soluzioni;
+  // document.getElementById("soluzioni").textContent = soluzioni;
 }
 
 function shuffle(a = "A", b = "B", c = "C") {
-  return [a, b, c];
+  var vertici = [a, b, c];
+  var r = Math.random();
+  if (r > 0.66) {
+    [vertici[0], vertici[1]] = [vertici[1], vertici[0]];
+  } else if (r > 0.33) {
+    [vertici[0], vertici[2]] = [vertici[2], vertici[0]];
+  }
+  if (Math.random() > 0.55) {
+    [vertici[1], vertici[2]] = [vertici[2], vertici[1]];
+  }
+  return vertici;
 }
 
 function arrotonda2(n) {
@@ -31,7 +53,15 @@ function arrotonda2(n) {
 }
 
 // il testo negli esercizi del tipo lato + angolo -> lato
-function genera_testo_l(retto, ang, ang_val, lato, lato_val, lato2) {
+function genera_testo_l(
+  retto,
+  ang,
+  ang_val,
+  lato,
+  lato_val,
+  lato2,
+  udm_lati = " u"
+) {
   var testo = "Considera il tringolo ABC, rettangolo in " + retto + ". ";
   testo += "L'angolo in " + ang + " misura " + ang_val + udm_angoli + ", ";
   testo += "e il lato " + lato + " misura " + lato_val + udm_lati + ". ";
@@ -40,18 +70,29 @@ function genera_testo_l(retto, ang, ang_val, lato, lato_val, lato2) {
 }
 
 // il testo negli esercizi del tipo lato + lato -> angolo
-function genera_testo_a(retto, lato1, lato1_val, lato2, lato2_val, ang) {
+function genera_testo_a(
+  retto,
+  lato1,
+  lato1_val,
+  lato2,
+  lato2_val,
+  ang,
+  udm_lati = " u"
+) {
   var testo = "Considera il tringolo ABC, rettangolo in " + retto + ". ";
   testo += "Il lato " + lato1 + " misura " + lato1_val + udm_lati + ". ";
   testo += "e il lato " + lato2 + " misura " + lato2_val + udm_lati + ". ";
-  testo += "Calcolare la lunghezza dell'angolo in " + ang + ".";
+  testo += "Calcolare l'ampiezza dell'angolo in " + ang + ".";
   return testo;
 }
 
 // t = 0--5 i dati sono un lato e un angolo
-// t = 6--9 i dati sono due lati
+// t = 6--8 i dati sono due lati
 function genera_es(t) {
+  // genera a caso i vertici e l'unità di misura
   const vertici = shuffle();
+  const udm_lati =
+    udm_lati_list[Math.floor(Math.random() * udm_lati_list.length)];
 
   // i nomi dell'angolo retto e l'angolo noto
   const retto = vertici[0];
@@ -74,7 +115,7 @@ function genera_es(t) {
     case 0:
       ipo_val = arrotonda2(Math.random() * lato_delta + lato_min);
 
-      testo = genera_testo_l(retto, ang, ang_val, ipo, ipo_val, cad);
+      testo = genera_testo_l(retto, ang, ang_val, ipo, ipo_val, cad, udm_lati);
       sol = arrotonda2(ipo_val * Math.cos((ang_val * Math.PI) / 180));
       break;
 
@@ -82,7 +123,7 @@ function genera_es(t) {
     case 1:
       ipo_val = arrotonda2(Math.random() * lato_delta + lato_min);
 
-      testo = genera_testo_l(retto, ang, ang_val, ipo, ipo_val, cop);
+      testo = genera_testo_l(retto, ang, ang_val, ipo, ipo_val, cop, udm_lati);
       sol = arrotonda2(ipo_val * Math.sin((ang_val * Math.PI) / 180));
       break;
 
@@ -90,7 +131,7 @@ function genera_es(t) {
     case 2:
       cop_val = arrotonda2(Math.random() * lato_delta + lato_min);
 
-      testo = genera_testo_l(retto, ang, ang_val, cop, cop_val, ipo);
+      testo = genera_testo_l(retto, ang, ang_val, cop, cop_val, ipo, udm_lati);
       sol = arrotonda2(cop_val / Math.sin((ang_val * Math.PI) / 180));
       break;
 
@@ -98,7 +139,7 @@ function genera_es(t) {
     case 3:
       cad_val = arrotonda2(Math.random() * lato_delta + lato_min);
 
-      testo = genera_testo_l(retto, ang, ang_val, cad, cad_val, ipo);
+      testo = genera_testo_l(retto, ang, ang_val, cad, cad_val, ipo, udm_lati);
       sol = arrotonda2(cad_val / Math.cos((ang_val * Math.PI) / 180));
       break;
 
@@ -106,7 +147,7 @@ function genera_es(t) {
     case 4:
       cop_val = arrotonda2(Math.random() * lato_delta + lato_min);
 
-      testo = genera_testo_l(retto, ang, ang_val, cop, cop_val, cad);
+      testo = genera_testo_l(retto, ang, ang_val, cop, cop_val, cad, udm_lati);
       sol = arrotonda2(cop_val / Math.tan((ang_val * Math.PI) / 180));
       break;
 
@@ -114,7 +155,7 @@ function genera_es(t) {
     case 5:
       cad_val = arrotonda2(Math.random() * lato_delta + lato_min);
 
-      testo = genera_testo_l(retto, ang, ang_val, cad, cad_val, cop);
+      testo = genera_testo_l(retto, ang, ang_val, cad, cad_val, cop, udm_lati);
       sol = arrotonda2(cad_val * Math.tan((ang_val * Math.PI) / 180));
       break;
 
@@ -123,7 +164,7 @@ function genera_es(t) {
       ipo_val = arrotonda2(Math.random() * lato_delta + lato_min);
       cad_val = arrotonda2(Math.random() * (ipo_val - lato_min) + lato_min / 2);
 
-      testo = genera_testo_a(retto, ipo, ipo_val, cad, cad_val, ang);
+      testo = genera_testo_a(retto, ipo, ipo_val, cad, cad_val, ang, udm_lati);
       sol = arrotonda2((Math.acos(cad_val / ipo_val) * 180) / Math.PI);
       break;
 
@@ -132,7 +173,7 @@ function genera_es(t) {
       ipo_val = arrotonda2(Math.random() * lato_delta + lato_min);
       cop_val = arrotonda2(Math.random() * (ipo_val - lato_min) + lato_min / 2);
 
-      testo = genera_testo_a(retto, ipo, ipo_val, cop, cop_val, ang);
+      testo = genera_testo_a(retto, ipo, ipo_val, cop, cop_val, ang, udm_lati);
       sol = arrotonda2((Math.asin(cop_val / ipo_val) * 180) / Math.PI);
       break;
 
@@ -141,7 +182,7 @@ function genera_es(t) {
       cop_val = arrotonda2(Math.random() * lato_delta + lato_min);
       cad_val = arrotonda2(Math.random() * lato_delta + lato_min);
 
-      testo = genera_testo_a(retto, cop, cop_val, cad, cad_val, ang);
+      testo = genera_testo_a(retto, cop, cop_val, cad, cad_val, ang, udm_lati);
       sol = arrotonda2((Math.atan(cop_val / cad_val) * 180) / Math.PI);
       break;
 
