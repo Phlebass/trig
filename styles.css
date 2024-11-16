@@ -7,3 +7,17 @@
 h1 span {
   border-bottom: 3pt solid orange;
 }
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+.soluzione {
+  background-color: lightgray;
+  color: lightgray;
+}
+
+.soluzione:hover {
+  background-color: inherit;
+  color: inherit;
+}
