@@ -6,7 +6,7 @@ const ang_min = 5;
 const ang_max = 85;
 const ang_delta = ang_max - ang_min;
 const udm_angoli = "&deg";
-const udm_lati_list = [" u", " cm", " N"];
+const udm_lati_list = udm.map((a) => " " + a);
 
 function shuffle(a = "A", b = "B", c = "C") {
   var vertici = [a, b, c];

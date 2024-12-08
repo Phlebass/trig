@@ -8,10 +8,16 @@
     <script src="genera_es.js"></script>
     <title>Triangoli</title>
   </head>
-  <body>
+  <body onload="scrivi_impostazioni()">
     <h1><span>Trigonometria</span></h1>
     Vuoi fare alcuni esercizi di trigonometria?
-    <button onclick="genera()">Genera</button>
+    <p>
+      <button onclick="genera()">Genera</button>
+      <button onclick="impostazioni_toggle()">Impostazioni</button>
+    </p>
+
+    <div id="impostazioni"></div>
+
     <ol id="exlist"></ol>
 
     <div id="csv_stuff" style="display: none">

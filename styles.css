@@ -4,8 +4,19 @@
   font-family: "Noto Sans", sans-serif;
 }
 
+body {
+  max-width: 80ch;
+  margin: auto;
+  padding-bottom: 5rem;
+}
+
 h1 span {
   border-bottom: 3pt solid orange;
+}
+
+#impostazioni {
+  border: 1pt solid gray;
+  padding: 1rem;
 }
 
 li {
@@ -20,4 +31,8 @@ li {
 .soluzione:hover {
   background-color: inherit;
   color: inherit;
+}
+
+#impostazioni {
+  display: none;
 }
