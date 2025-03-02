@@ -36,7 +36,7 @@ function genera_testo_l(
   lato2,
   udm_lati = " u"
 ) {
-  var testo = "Considera il tringolo ABC, rettangolo in " + retto + ". ";
+  var testo = "Considera il triangolo ABC, rettangolo in " + retto + ". ";
   testo += "L'angolo in " + ang + " misura " + ang_val + udm_angoli + " ";
   testo += "e il lato " + lato + " misura " + lato_val + udm_lati + ". ";
   testo += "Calcolare la lunghezza di " + lato2 + ".";
@@ -53,7 +53,7 @@ function genera_testo_a(
   ang,
   udm_lati = " u"
 ) {
-  var testo = "Considera il tringolo ABC, rettangolo in " + retto + ". ";
+  var testo = "Considera il triangolo ABC, rettangolo in " + retto + ". ";
   testo += "Il lato " + lato1 + " misura " + lato1_val + udm_lati + " ";
   testo += "e il lato " + lato2 + " misura " + lato2_val + udm_lati + ". ";
   testo += "Calcolare l'ampiezza dell'angolo in " + ang + ".";
@@ -173,8 +173,4 @@ function genera_es(t) {
   }
 
   return { testo, sol };
-}
-
-function es_to_csv(testo, sol) {
-  return "Ciao";
 }
